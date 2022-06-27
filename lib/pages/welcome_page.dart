@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/misc/colors.dart';
 import 'package:travel/widgets/app_large_text.dart';
 import 'package:travel/widgets/responsive_button.dart';
 
@@ -17,7 +18,7 @@ class _WelcomePageState extends State<WelcomePage> {
   ];
   List text = [
     'Mountain hikes gives you a an incredible sense of freedom along with endurance tests.',
-    'I’ve never understood hiring Sherpas to claim you’ve conquered Everest. I’d rather climb a mountain half the size and be able to say I’ve done it on my own.',
+    'I’ve never understood hiring Sherpas to claim you’ve conquered Everest. ',
     'I took a walk in the woods and came out taller than trees.',
   ];
 
@@ -36,26 +37,46 @@ class _WelcomePageState extends State<WelcomePage> {
                       fit: BoxFit.cover,
                       image: AssetImage("images/" + images[index]))),
               child: Container(
+                width: double.infinity,
                 margin: const EdgeInsets.only(top: 150, left: 20, right: 20),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppText(text: 'Trips'),
                         AppText(
-                            text: 'Mountain', fontweight: FontWeight.normal),
+                          text: 'Mountain',
+                          size: 30,
+                        ),
                         Container(
                           width: 250,
+                          padding: const EdgeInsets.only(top: 15),
                           child: AppText(
-                              text: text[index],
-                              fontweight: FontWeight.normal,
-                              size: 12),
+                            text: text[index],
+                            fontweight: FontWeight.normal,
+                            size: 14,
+                            color: AppColors.textColor2,
+                          ),
                         ),
-                        SizedBox(height: 40),
-                        ResponsiveButton()
-
+                        const SizedBox(height: 40),
+                        ResponsiveButton(),
                       ],
+                    ),
+                    Column(
+                      children: List.generate(
+                          3,
+                          (indexDots) => Container(
+                                margin: const EdgeInsets.only(bottom: 2),
+                                width: 8,
+                                height: index == indexDots ? 25 : 8,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: index == indexDots
+                                        ? AppColors.mainColor
+                                        : AppColors.mainColor.withOpacity(0.5)),
+                              )),
                     )
                   ],
                 ),
