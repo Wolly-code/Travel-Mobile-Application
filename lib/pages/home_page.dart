@@ -10,9 +10,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  var images = {
+    "balloning.png": "Balloning",
+    "hiking.png": "Hiking",
+    "kayaking.png": "Kayaking",
+    "snorkling.png": "Snorkling"
+  };
+
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 3, vsync: this);
+    TabController tabController = TabController(length: 3, vsync: this);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,18 +45,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ],
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
           Container(
             margin: EdgeInsets.only(left: 15),
             child: AppText(text: "Discover"),
-          ),
-          SizedBox(
-            height: 30,
           ),
           Container(
             alignment: Alignment.centerLeft,
             // padding: EdgeInsets.all(10.0),
             child: TabBar(
-                controller: _tabController,
+                controller: tabController,
                 labelColor: Colors.black,
                 labelPadding: const EdgeInsets.only(left: 20, right: 20),
                 unselectedLabelColor: Colors.grey,
@@ -71,9 +78,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
           Container(
             margin: EdgeInsets.only(left: 15, right: 15),
-            height: 300,
+            height: 250,
             width: double.maxFinite,
-            child: TabBarView(controller: _tabController, children: [
+            child: TabBarView(controller: tabController, children: [
               ListView.builder(
                 itemCount: 3,
                 scrollDirection: Axis.horizontal,
@@ -85,7 +92,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         image: AssetImage('images/mountain.jpeg'),
                         fit: BoxFit.cover,
                       ),
@@ -98,7 +105,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ]),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 20, right: 20),
+            margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -115,34 +122,48 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
-          SingleChildScrollView(
-            child: Container(
-              width: double.maxFinite,
-              margin: const EdgeInsets.only(left: 20),
-              child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (_, index) {
-                    return Column(
+          Container(
+            height: 125,
+            width: double.maxFinite,
+            margin: const EdgeInsets.only(left: 20),
+            child: ListView.builder(
+                itemCount: 4,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (_, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(right: 20),
+                    child: Column(
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(right: 50),
+                          // margin: const EdgeInsets.only(right: 50),
                           width: 80,
-                          height: 80 ,
+                          height: 80,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
                             image: DecorationImage(
-                              image: AssetImage('images/mountain.jpeg'),
+                              image: AssetImage(
+                                  'images/' + images.keys.elementAt(index)),
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          child: AppText(
+                            text: images.values.elementAt(index),
+                            size: 12,
+                            color: AppColors.textColor2,
+                          ),
+                        )
                       ],
-                    );
-                  }),
-            ),
+                    ),
+                  );
+                }),
           )
         ],
       ),
@@ -170,13 +191,13 @@ class _CirclePainter extends BoxPainter {
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    Paint _paint = Paint();
-    _paint.color = color;
-    _paint.isAntiAlias = true;
+    Paint paint = Paint();
+    paint.color = color;
+    paint.isAntiAlias = true;
     final Offset circleOffset = Offset(
         configuration.size!.width / 2 - radius / 2,
         configuration.size!.height - radius);
 
-    canvas.drawCircle(offset + circleOffset, radius, _paint);
+    canvas.drawCircle(offset + circleOffset, radius, paint);
   }
 }
