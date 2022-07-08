@@ -16,5 +16,5 @@ class DataModel {
     required this.description,
     required this.location,
   });
-  factory DataModel.fromJson(Map<String, dynamic>)
+  // factory DataModel.fromJson(Map<String, dynamic>){}
 }
